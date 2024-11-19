@@ -109,6 +109,10 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
+7. You can create your own survey from the admin page with the superuser created. The survey creation process should be easy
+```
+http:localhost:8000/admin
+```
 
 The API should now be running at `http://localhost:8000/`
 
