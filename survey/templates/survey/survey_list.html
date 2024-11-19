@@ -1,0 +1,39 @@
+{% extends '../survey/base.html' %}
+{% block head%}
+<style>
+    btn-lg{ font-size: 2.25rem; }
+    ul {
+        list-style-type: none;
+        
+    }
+</style>
+{% endblock %}
+{% block body %}    
+    <h1>Available Surveys</h1>
+    <ul>
+        
+        {% for survey in surveys %}
+            <div class="container bg-dark m-4 p-5 rounded">
+                <li><a class="btn btn-light btn-lg" href="{% url 'survey_detail' survey.id %}" role="button">{{ survey.title }}</a></li>
+            </div>
+        {% endfor %}
+        
+    </ul>
+    {% if messages %}
+        <div id="message-container" style="display: none;">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">{{ message }}</div>  <!-- Add message content with class tag for type -->
+            {% endfor %}
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const messages = document.querySelectorAll("#message-container div");
+                messages.forEach(message => {
+                    alert(message.textContent.trim());  // Show each message in an alert pop-up
+                });
+            });
+        </script>
+    {% endif %}
+
+{% endblock %}

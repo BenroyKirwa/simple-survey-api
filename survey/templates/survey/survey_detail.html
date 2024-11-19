@@ -1,0 +1,100 @@
+{% extends 'survey/base.html' %}
+{% load custom_filters %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="card bg-dark text-light">
+        <div class="card-header">
+            <h2 class="h2">{{ survey.title }}</h2>
+            <p>{{ survey.description }}</p>
+        </div>
+
+        <div class="card-body">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if already_submitted %}
+                <div class="alert alert-info">
+                    You have already submitted this survey. Thank you for your participation!
+                </div>
+            {% else %}
+                <div class="card bg-secondary text-light mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Question {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="POST" class="w-100" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="question-container mb-4">
+                                <h5 class="mb-3">{{ question.question_text }}</h5>
+                                {% if question.description %}
+                                    <p class="text-light mb-4">{{ question.description }}</p>
+                                {% endif %}
+
+                                {% if question.type == "short_text" %}
+                                    <input type="text" name="answer" class="form-control" 
+                                           value="{{ stored_answer }}" 
+                                           {% if question.is_required %}required{% endif %}>
+                                
+                                {% elif question.type == "long_text" %}
+                                    <textarea name="answer" class="form-control" rows="4" 
+                                              {% if question.is_required %}required{% endif %}>{{ stored_answer }}</textarea>
+                                
+                                {% elif question.type == "choice" %}
+                                    {% for option in question.options.all %}
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" 
+                                                   name="answer" value="{{ option.id }}" 
+                                                   id="option{{ option.id }}"
+                                                   {% if stored_answer|stringformat:"s" == option.id|stringformat:"s" %}checked{% endif %}
+                                                   {% if question.is_required %}required{% endif %}>
+                                            <label class="form-check-label" for="option{{ option.id }}">
+                                                {{ option.option_text }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                
+                                {% elif question.type == "file" %}
+                                    <div class="mb-3">
+                                        <input type="file" name="certificate" class="form-control" 
+                                               accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                               {% if question.is_required and not stored_answer %}required{% endif %}>
+                                        {% if stored_answer.type == 'file' %}
+                                            <div class="mt-2">
+                                                <small class="text-light">Currently uploaded: {{ stored_answer.filename }}</small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="navigation-buttons d-flex justify-content-between mt-4">
+                                {% if page_obj.has_previous %}
+                                    <button type="submit" name="prev" class="btn btn-secondary">Previous</button>
+                                {% else %}
+                                    <div></div>
+                                {% endif %}
+                                
+                                {% if page_obj.has_next %}
+                                    <button type="submit" name="next" class="btn btn-primary">Next</button>
+                                {% else %}
+                                    <button type="submit" name="next" class="btn btn-success">Review Answers</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
