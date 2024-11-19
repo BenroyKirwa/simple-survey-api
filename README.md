@@ -75,6 +75,7 @@ pip install mysqlclient
 ```
 
 ### Setup Instructions
+0. Copy the template and static files from [simple=survey-client](https://github.com/BenroyKirwa/simple-survey-client.git) to fit the file structure below
 
 1. Clone the repository
 ```bash
@@ -113,21 +114,46 @@ The API should now be running at `http://localhost:8000/`
 
 ### Project Structure
 ```
-simple-survey-api/
+SurveyMaster/
+│
 ├── sky_survey/                 
-│   ├── settings.py            
-│   ├── urls.py                
-│   └── ...
+│   ├── __init__.py             
+│   ├── settings.py             
+│   ├── urls.py                 
+│   ├── wsgi.py                 
+│   ├── asgi.py                 
+│   └── manage.py               
+│
 ├── survey/                     
+│   ├── migrations/             
+│   │   └── __init__.py         
+│   ├── templates/             
+│   │   └── survey/
+│   │       ├── base.html       
+│   │       ├── survey_list.html 
+│   │       └── survey_responses.html
+│   ├── static/                 
+│   │   ├── css/
+│   │   │   └── styles.css      
+│   │   ├── js/
+│   │   │   └── scripts.js      
+│   │   └── images/             
+│   ├── admin.py                
+│   ├── apps.py                 
 │   ├── models.py              
-│   ├── views.py               
-│   ├── serializers.py         
-│   ├── urls.py                
-│   └── ...
+│   ├── tests.py               
+│   ├── urls.py                 
+│   └── views.py                
+│
 ├── venv/                       
-├── requirements.txt            
+│   ├── Scripts/               
+│   └── site-packages/          
+│
+├── requirements.txt           
 ├── README.md                   
-└── db.sqlite3
+├── db.sqlite3                  
+└── .gitignore                 
+
 ```
 
 ## Part 2: API Documentation
