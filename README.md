@@ -75,7 +75,7 @@ pip install mysqlclient
 ```
 
 ### Setup Instructions
-0. Copy the template and static files from [simple=survey-client](https://github.com/BenroyKirwa/simple-survey-client.git) to fit the file structure below
+0. Copy the template and static files from [simple-survey-client](https://github.com/BenroyKirwa/simple-survey-client.git) to fit the file structure below
 
 1. Clone the repository
 ```bash
@@ -114,7 +114,7 @@ The API should now be running at `http://localhost:8000/`
 
 ### Project Structure
 ```
-SurveyMaster/
+simple-survey-api/
 │
 ├── sky_survey/                 
 │   ├── __init__.py             
