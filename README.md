@@ -113,7 +113,10 @@ python manage.py runserver
 ```
 http:localhost:8000/admin
 ```
-
+8. Ensure you have installed django rest framework with :
+```bash
+pip install djangorestframework
+```
 The API should now be running at `http://localhost:8000/`
 
 ### Project Structure
